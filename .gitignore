@@ -1,0 +1,26 @@
+# ignore all extension-less files
+*
+!/**/
+!*.*
+!gradlew
+
+# ignore all hidden files
+.*
+!.gitignore
+
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+*.class
+*.log
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# ignore folder
+out/
+logs/
+build/
+target/
