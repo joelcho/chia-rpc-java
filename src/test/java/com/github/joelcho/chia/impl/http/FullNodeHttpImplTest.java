@@ -23,11 +23,11 @@ public class FullNodeHttpImplTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
 
-        final String endpoint = "http://127.0.0.1:8555";
+        final String endpoint = "https://127.0.0.1:8555";
         final String keyStorePass = "keyStorePass";
 
         KeyStore keyStore;
-        try (InputStream in = this.getClass().getResourceAsStream("cert.p12")) {
+        try (InputStream in = this.getClass().getClassLoader().getResourceAsStream("private_full_node.p12")) {
             keyStore = KeyStoreLoader.load(in, "PKCS12", keyStorePass);
         }
         CloseableHttpClient hc = ClientCertAuthHttpClientBuilder.build(keyStore, keyStorePass, true);

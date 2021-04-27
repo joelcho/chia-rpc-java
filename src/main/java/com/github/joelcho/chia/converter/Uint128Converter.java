@@ -16,7 +16,7 @@ import java.math.BigInteger;
 public class Uint128Converter extends StdConverter<String, Uint128> {
     @Override
     public Uint128 convert(String value) {
-        BigInteger i = new BigInteger(value, 10);
+        BigInteger i = Uint64Converter.parseInteger(value);
         return Uint128.fromInteger(i);
     }
 }

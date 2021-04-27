@@ -5,6 +5,9 @@
 // IDE            : IntelliJ IDEA community edition
 package com.github.joelcho.chia;
 
+import com.github.joelcho.chia.types.farmer.RewardTargetsRsp;
+import com.github.joelcho.chia.types.farmer.SignagePointRsp;
+import com.github.joelcho.chia.types.harvester.GetPlotsRsp;
 import com.github.joelcho.chia.types.node.*;
 import com.github.joelcho.chia.types.primitive.Uint128;
 
@@ -19,6 +22,7 @@ public class Action {
     public static final int SEC_TYPE_COLLECTION = 1;
     public static final int SEC_TYPE_MAP = 2;
 
+    // region full node actions
     public static final Action GET_BLOCKCHAIN_STATE
             = new Action("get_blockchain_state", "blockchain_state", BlockchainState.class);
 
@@ -63,6 +67,38 @@ public class Action {
 
     public static final Action GET_MEMPOOL_ITEM_BY_TX_ID
             = new Action("get_mempool_item_by_tx_id", "mempool_item", MempoolItem.class);
+    // endregion
+
+    // region harvester actions
+    public static final Action GET_PLOTS
+            = new Action("get_plots", null, GetPlotsRsp.class);
+
+    public static final Action REFRESH_PLOTS
+            = new Action("refresh_plots", null, Void.TYPE);
+
+    public static final Action DELETE_PLOT
+            = new Action("delete_plot", null, Void.TYPE);
+
+    public static final Action ADD_PLOT_DIRECTORY
+            = new Action("add_plot_directory", null, Void.TYPE);
+
+    public static final Action GET_PLOT_DIRECTORIES
+            = new Action("get_plot_directories", "directories", String.class, SEC_TYPE_COLLECTION);
+
+    public static final Action REMOVE_PLOT_DIRECTORY
+            = new Action("remove_plot_directory", null, Void.TYPE);
+    // endregion
+
+    // region farmer actions
+    public static final Action GET_SIGNAGE_POINT
+            = new Action("get_signage_point", null, SignagePointRsp.class);
+    public static final Action GET_SIGNAGE_POINTS
+            = new Action("get_signage_points", "signage_points", SignagePointRsp.class, SEC_TYPE_COLLECTION);
+    public static final Action GET_REWARD_TARGETS
+            = new Action("get_reward_targets", null, RewardTargetsRsp.class);
+    public static final Action SET_REWARD_TARGETS
+            = new Action("set_reward_targets", null, Void.class);
+    // endregion
 
     private final String methodName;
     private final String resultFieldName;
