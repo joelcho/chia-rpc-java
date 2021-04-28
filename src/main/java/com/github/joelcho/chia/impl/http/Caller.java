@@ -10,9 +10,9 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.joelcho.chia.Action;
+import com.github.joelcho.chia.action.Action;
 import com.github.joelcho.chia.RPCException;
-import com.github.joelcho.chia.ResultMapAction;
+import com.github.joelcho.chia.action.ActionResultMap;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,8 +30,8 @@ import java.util.Map;
 /**
  * @author Joel
  */
-class Caller {
-    protected static <T> T call(CloseableHttpClient httpClient, URI baseURI,
+public class Caller {
+    public static <T> T call(CloseableHttpClient httpClient, URI baseURI,
                                 ObjectMapper mapper, ObjectNode data,
                                 Action action) throws Exception {
         URIBuilder uriBuilder = new URIBuilder(baseURI);
@@ -85,7 +85,7 @@ class Caller {
             if (action.getSecondType() == Action.SEC_TYPE_COLLECTION) {
                 returnJavaType = mapper.getTypeFactory().constructCollectionType(List.class, returnJavaType);
             } else if (action.getSecondType() == Action.SEC_TYPE_MAP) {
-                ResultMapAction rma = (ResultMapAction) action;
+                ActionResultMap rma = (ActionResultMap) action;
                 JavaType keyType = mapper.getTypeFactory().constructType(rma.getKeyType());
                 returnJavaType = mapper.getTypeFactory().constructMapType(Map.class, keyType, returnJavaType);
             }

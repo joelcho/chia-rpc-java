@@ -8,9 +8,9 @@ package com.github.joelcho.chia.impl.http;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.joelcho.chia.Action;
 import com.github.joelcho.chia.FullNode;
-import com.github.joelcho.chia.ResultMapAction;
+import com.github.joelcho.chia.action.ActionResultMap;
+import com.github.joelcho.chia.action.FullNodeAction;
 import com.github.joelcho.chia.types.node.*;
 import com.github.joelcho.chia.types.primitive.Bytes32;
 import com.github.joelcho.chia.types.primitive.Uint128;
@@ -39,14 +39,14 @@ public class FullNodeHttpImpl implements FullNode {
 
     @Override
     public BlockchainState getBlockchainState() throws Exception {
-        return Caller.call(httpClient, uri, objectMapper, emptyNode, Action.GET_BLOCKCHAIN_STATE);
+        return Caller.call(httpClient, uri, objectMapper, emptyNode, FullNodeAction.GET_BLOCKCHAIN_STATE);
     }
 
     @Override
     public Block getBlock(String headerHash) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("header_hash", headerHash);
-        Block block = Caller.call(httpClient, uri, objectMapper, params, Action.GET_BLOCK);
+        Block block = Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_BLOCK);
         if (block != null) {
             block.setHeaderHash(Bytes32.fromHex(headerHash));
         }
@@ -59,26 +59,26 @@ public class FullNodeHttpImpl implements FullNode {
         params.put("start", start);
         params.put("end", end);
         params.put("exclude_header_hash", excludeHeaderHash);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_BLOCKS);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_BLOCKS);
     }
 
     @Override
     public List<UnfinishedHeaderBlock> getUnfinishedBlockHeaders() throws Exception {
-        return Caller.call(httpClient, uri, objectMapper, emptyNode, Action.GET_UNFINISHED_BLOCK_HEADERS);
+        return Caller.call(httpClient, uri, objectMapper, emptyNode, FullNodeAction.GET_UNFINISHED_BLOCK_HEADERS);
     }
 
     @Override
     public BlockRecord getBlockRecordByHeight(long height) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("height", height);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_BLOCK_RECORD_BY_HEIGHT);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_BLOCK_RECORD_BY_HEIGHT);
     }
 
     @Override
     public BlockRecord getBlockRecord(String headerHash) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("header_hash", headerHash);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_BLOCK_RECORD);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_BLOCK_RECORD);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class FullNodeHttpImpl implements FullNode {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("start", start);
         params.put("end", end);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_BLOCK_RECORDS);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_BLOCK_RECORDS);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class FullNodeHttpImpl implements FullNode {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("older_block_header_hash", olderBlockHeaderHash);
         params.put("newer_block_header_hash", newerBlockHeaderHash);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_NETWORK_SPACE);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_NETWORK_SPACE);
     }
 
     @Override
@@ -102,18 +102,18 @@ public class FullNodeHttpImpl implements FullNode {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("header_hash", headerHash);
         params.put("newer_block_header_hash", newerBlockHeaderHash);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_ADDITIONS_AND_REMOVALS);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_ADDITIONS_AND_REMOVALS);
     }
 
     @Override
     @SuppressWarnings("all")
     public long getInitialFreezePeriod() throws Exception {
-        return Caller.call(httpClient, uri, objectMapper, emptyNode, Action.GET_INITIAL_FREEZE_PERIOD);
+        return Caller.call(httpClient, uri, objectMapper, emptyNode, FullNodeAction.GET_INITIAL_FREEZE_PERIOD);
     }
 
     @Override
     public NetworkInfo getNetworkInfo() throws Exception {
-        return Caller.call(httpClient, uri, objectMapper, emptyNode, Action.GET_NETWORK_INFO);
+        return Caller.call(httpClient, uri, objectMapper, emptyNode, FullNodeAction.GET_NETWORK_INFO);
     }
 
     @Override
@@ -127,14 +127,14 @@ public class FullNodeHttpImpl implements FullNode {
         if (endHeight != null) {
             params.put("end_height", endHeight);
         }
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_COIN_RECORDS_BY_PUZZLE_HASH);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_COIN_RECORDS_BY_PUZZLE_HASH);
     }
 
     @Override
     public CoinRecord getCoinRecordByName(String name) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("name", name);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_COIN_RECORD_BY_NAME);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_COIN_RECORD_BY_NAME);
     }
 
     @Override
@@ -144,18 +144,18 @@ public class FullNodeHttpImpl implements FullNode {
 
     @Override
     public List<String> getAllMempoolTxIds() throws Exception {
-        return Caller.call(httpClient, uri, objectMapper, emptyNode, Action.GET_ALL_MEMPOOL_TX_IDS);
+        return Caller.call(httpClient, uri, objectMapper, emptyNode, FullNodeAction.GET_ALL_MEMPOOL_TX_IDS);
     }
 
     @Override
     public Map<String, MempoolItem> getAllMempoolItems() throws Exception {
-        return Caller.call(httpClient, uri, objectMapper, emptyNode, ResultMapAction.GET_ALL_MEMPOOL_ITEMS);
+        return Caller.call(httpClient, uri, objectMapper, emptyNode, FullNodeAction.GET_ALL_MEMPOOL_ITEMS);
     }
 
     @Override
     public MempoolItem getMempoolItemByTxId(String txId) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("tx_id", txId);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_MEMPOOL_ITEM_BY_TX_ID);
+        return Caller.call(httpClient, uri, objectMapper, params, FullNodeAction.GET_MEMPOOL_ITEM_BY_TX_ID);
     }
 }

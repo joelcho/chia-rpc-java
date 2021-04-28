@@ -24,3 +24,8 @@ out/
 logs/
 build/
 target/
+
+*.p12
+*.key
+*.crt
+.jks

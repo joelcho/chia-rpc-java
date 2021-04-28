@@ -3,22 +3,17 @@
 // Line separator : LF
 // Tab stop       : 4 spaces
 // IDE            : IntelliJ IDEA community edition
-package com.github.joelcho.chia;
-
-import com.github.joelcho.chia.types.node.MempoolItem;
+package com.github.joelcho.chia.action;
 
 import java.lang.reflect.Type;
 
 /**
  * @author Joel
  */
-public class ResultMapAction extends Action {
-    public static final Action GET_ALL_MEMPOOL_ITEMS
-            = new ResultMapAction("get_all_mempool_items", "mempool_items", String.class, MempoolItem.class);
-
+public class ActionResultMap extends Action {
     private final Type keyType;
 
-    public ResultMapAction(String methodName, String resultFieldName, Type keyType, Type valueType) {
+    public ActionResultMap(String methodName, String resultFieldName, Type keyType, Type valueType) {
         super(methodName, resultFieldName, valueType, Action.SEC_TYPE_MAP);
         this.keyType = keyType;
     }

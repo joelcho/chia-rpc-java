@@ -9,5 +9,17 @@ package com.github.joelcho.chia.types.wallet.login;
  * @author Joel
  */
 public enum LoginType {
-    None, Start, Skip, RestoreBackup
+    None, Start, Skip, RestoreBackup;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case Skip:
+                return "skip";
+            case RestoreBackup:
+                return "restore_backup";
+            default:
+                return "start";
+        }
+    }
 }

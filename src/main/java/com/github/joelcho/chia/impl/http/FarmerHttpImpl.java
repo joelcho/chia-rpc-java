@@ -8,8 +8,8 @@ package com.github.joelcho.chia.impl.http;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.github.joelcho.chia.Action;
 import com.github.joelcho.chia.Farmer;
+import com.github.joelcho.chia.action.FarmerAction;
 import com.github.joelcho.chia.types.farmer.RewardTargetsRsp;
 import com.github.joelcho.chia.types.farmer.SignagePointRsp;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -38,19 +38,19 @@ public class FarmerHttpImpl implements Farmer {
     public SignagePointRsp getSignagePoint(String spHash) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("sp_hash", spHash);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_SIGNAGE_POINT);
+        return Caller.call(httpClient, uri, objectMapper, params, FarmerAction.GET_SIGNAGE_POINT);
     }
 
     @Override
     public List<SignagePointRsp> getSignagePoints() throws Exception {
-        return Caller.call(httpClient, uri, objectMapper, emptyNode, Action.GET_SIGNAGE_POINTS);
+        return Caller.call(httpClient, uri, objectMapper, emptyNode, FarmerAction.GET_SIGNAGE_POINTS);
     }
 
     @Override
     public RewardTargetsRsp getRewardTargets(boolean searchForPrivateKey) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("search_for_private_key", searchForPrivateKey);
-        return Caller.call(httpClient, uri, objectMapper, params, Action.GET_REWARD_TARGETS);
+        return Caller.call(httpClient, uri, objectMapper, params, FarmerAction.GET_REWARD_TARGETS);
     }
 
     @Override
@@ -58,6 +58,6 @@ public class FarmerHttpImpl implements Farmer {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("farmer_target", farmerTarget);
         params.put("pool_target", poolTarget);
-        Caller.call(httpClient, uri, objectMapper, params, Action.SET_REWARD_TARGETS);
+        Caller.call(httpClient, uri, objectMapper, params, FarmerAction.SET_REWARD_TARGETS);
     }
 }

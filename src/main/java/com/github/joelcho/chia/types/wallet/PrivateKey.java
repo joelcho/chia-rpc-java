@@ -5,6 +5,9 @@
 // IDE            : IntelliJ IDEA community edition
 package com.github.joelcho.chia.types.wallet;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.joelcho.chia.converter.HexToByteArrayConverter;
+import com.github.joelcho.chia.converter.SeedConverter;
 import lombok.Data;
 
 import java.util.List;
@@ -14,8 +17,11 @@ import java.util.List;
  */
 @Data
 public class PrivateKey {
-    private  long fingerprint;
+    private long fingerprint;
+    @JsonDeserialize(converter = HexToByteArrayConverter.class)
     private byte[] sk;
+    @JsonDeserialize(converter = HexToByteArrayConverter.class)
     private byte[] pk;
+    @JsonDeserialize(converter = SeedConverter.class)
     private List<String> seed;
 }
