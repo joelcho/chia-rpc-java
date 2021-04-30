@@ -6,15 +6,18 @@
 package com.github.joelcho.chia.util;
 
 import org.bouncycastle.util.encoders.Hex;
-import org.web3j.utils.Numeric;
-import org.web3j.utils.Strings;
 
 /**
  * @author Joel
  */
 public class HexUtil {
-    public static String cleanHexPrefix(String x) {
-        return Numeric.cleanHexPrefix(x);
+    // https://github.com/web3j/web3j/blob/master/utils/src/main/java/org/web3j/utils/Numeric.java
+    public static String cleanHexPrefix(String input) {
+        if (containsHexPrefix(input)) {
+            return input.substring(2);
+        } else {
+            return input;
+        }
     }
 
     public static String toHexString(byte[] bytes, boolean prefixed, boolean zeroPadded, int strSize) {
@@ -33,5 +36,13 @@ public class HexUtil {
 
     public static byte[] decode(String x) {
         return org.bouncycastle.util.encoders.Hex.decode(x);
+    }
+
+    // https://github.com/web3j/web3j/blob/master/utils/src/main/java/org/web3j/utils/Numeric.java
+    public static boolean containsHexPrefix(String input) {
+        return !Strings.isEmpty(input)
+                && input.length() > 1
+                && input.charAt(0) == '0'
+                && input.charAt(1) == 'x';
     }
 }
