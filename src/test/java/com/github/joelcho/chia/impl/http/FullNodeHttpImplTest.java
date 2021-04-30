@@ -3,6 +3,7 @@ package com.github.joelcho.chia.impl.http;
 import com.github.joelcho.chia.FullNode;
 import com.github.joelcho.chia.types.node.*;
 import com.github.joelcho.chia.types.primitive.Uint128;
+import com.github.joelcho.chia.types.primitive.Uint64;
 import com.github.joelcho.chia.util.ClientCertAuthHttpClientBuilder;
 import com.github.joelcho.chia.util.KeyStoreLoader;
 import junit.framework.TestCase;
@@ -67,7 +68,7 @@ public class FullNodeHttpImplTest extends TestCase {
     }
 
     public void testGetInitialFreezePeriod() throws Exception {
-        final long initialFreezePeriod = client.getInitialFreezePeriod();
+        final Uint64 initialFreezePeriod = client.getInitialFreezePeriod();
     }
 
     public void testGetNetworkInfo() throws Exception {

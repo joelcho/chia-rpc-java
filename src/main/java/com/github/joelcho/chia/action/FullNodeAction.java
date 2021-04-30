@@ -46,7 +46,7 @@ public class FullNodeAction {
             = new Action("get_additions_and_removals", null, AdditionsAndRemovals.class);
 
     public static final Action GET_INITIAL_FREEZE_PERIOD
-            = new Action("get_initial_freeze_period", "INITIAL_FREEZE_PERIOD", Long.class);
+            = new Action("get_initial_freeze_period", "INITIAL_FREEZE_END_TIMESTAMP", String.class);
 
     public static final Action GET_NETWORK_INFO
             = new Action("get_network_info", null, NetworkInfo.class);

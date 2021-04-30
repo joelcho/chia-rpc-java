@@ -7,6 +7,7 @@ package com.github.joelcho.chia;
 
 import com.github.joelcho.chia.types.node.*;
 import com.github.joelcho.chia.types.primitive.Uint128;
+import com.github.joelcho.chia.types.primitive.Uint64;
 
 import java.util.List;
 import java.util.Map;
@@ -85,8 +86,7 @@ public interface FullNode {
     /**
      * Retrieves the initial freeze period for the blockchain (no transactions allowed).
      */
-    // TODO BUG
-    long getInitialFreezePeriod() throws Exception;
+    Uint64 getInitialFreezePeriod() throws Exception;
 
     /**
      * Retrieves some information about the current network.

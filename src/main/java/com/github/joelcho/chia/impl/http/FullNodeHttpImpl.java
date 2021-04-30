@@ -11,11 +11,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.joelcho.chia.FullNode;
 import com.github.joelcho.chia.action.ActionResultMap;
 import com.github.joelcho.chia.action.FullNodeAction;
+import com.github.joelcho.chia.converter.Uint64Converter;
 import com.github.joelcho.chia.types.node.*;
 import com.github.joelcho.chia.types.primitive.Bytes32;
 import com.github.joelcho.chia.types.primitive.Uint128;
+import com.github.joelcho.chia.types.primitive.Uint64;
 import org.apache.http.impl.client.CloseableHttpClient;
 
+import java.math.BigInteger;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -106,9 +109,11 @@ public class FullNodeHttpImpl implements FullNode {
     }
 
     @Override
-    @SuppressWarnings("all")
-    public long getInitialFreezePeriod() throws Exception {
-        return Caller.call(httpClient, uri, objectMapper, emptyNode, FullNodeAction.GET_INITIAL_FREEZE_PERIOD);
+    public Uint64 getInitialFreezePeriod() throws Exception {
+        String s = Caller.call(httpClient, uri, objectMapper, emptyNode, FullNodeAction.GET_INITIAL_FREEZE_PERIOD);
+        assert s != null;
+        BigInteger i = Uint64Converter.parseInteger(s);
+        return Uint64.fromInteger(i);
     }
 
     @Override
