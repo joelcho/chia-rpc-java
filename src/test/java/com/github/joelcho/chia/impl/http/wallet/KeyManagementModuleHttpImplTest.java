@@ -2,9 +2,6 @@ package com.github.joelcho.chia.impl.http.wallet;
 
 import com.github.joelcho.chia.types.wallet.AddKeyType;
 import com.github.joelcho.chia.types.wallet.PrivateKey;
-import com.github.joelcho.chia.types.wallet.login.LoginParam;
-import com.github.joelcho.chia.types.wallet.login.LoginRsp;
-import com.github.joelcho.chia.types.wallet.login.LoginType;
 import com.github.joelcho.chia.wallet.KeyManagementModule;
 import junit.framework.TestCase;
 import org.junit.Assert;
@@ -23,10 +20,8 @@ public class KeyManagementModuleHttpImplTest extends TestCase {
     }
 
     public void testLogin() throws Exception {
-        LoginParam param = new LoginParam();
-        param.setType(LoginType.None);
-        param.setFingerprint(0);
-        final LoginRsp login = km.login(param);
+        final long fingerprint = km.login(0);
+        Assert.assertEquals(0, fingerprint);
     }
 
     public void testGetPublicKeys() {

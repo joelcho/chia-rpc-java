@@ -34,11 +34,11 @@ public class TransactionRecord {
 
     private Object sent_to;
     private Bytes32 trade_id;
-    private long type; //TODO TransactionType
+    private TransactionType type;
     private Bytes32 name;
 
     public String getToAddress() {
-        if(toAddress == null) {
+        if (toAddress == null) {
             toAddress = ""; // TODO encode_puzzle_hash(this.to_puzzle_hash, prefix)
         }
         return toAddress;

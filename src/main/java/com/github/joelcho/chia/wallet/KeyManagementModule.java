@@ -6,9 +6,8 @@
 package com.github.joelcho.chia.wallet;
 
 import com.github.joelcho.chia.types.wallet.AddKeyType;
+import com.github.joelcho.chia.types.wallet.LoginRsp;
 import com.github.joelcho.chia.types.wallet.PrivateKey;
-import com.github.joelcho.chia.types.wallet.login.LoginParam;
-import com.github.joelcho.chia.types.wallet.login.LoginRsp;
 
 import java.util.List;
 
@@ -19,9 +18,19 @@ public interface KeyManagementModule {
     /**
      * Sets a key to active.
      *
-     * @param param param
+     * @param fingerprint fingerprint
      */
-    LoginRsp login(LoginParam param) throws Exception;
+    long login(long fingerprint) throws Exception;
+
+    /**
+     * Sets a key to active.
+     *
+     * @param fingerprint fingerprint
+     * @param type        skip, restore_backup, otherwise
+     * @param host        host to download backup
+     * @param filePath    backup file path, required if `type` is `restore_backup`
+     */
+    LoginRsp login(long fingerprint, String type, String host, String filePath) throws Exception;
 
     /**
      * Get all root public keys accessible by the wallet.

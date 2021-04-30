@@ -7,7 +7,7 @@ package com.github.joelcho.chia.action;
 
 import com.github.joelcho.chia.types.node.NetworkInfo;
 import com.github.joelcho.chia.types.wallet.*;
-import com.github.joelcho.chia.types.wallet.login.LoginRsp;
+import com.github.joelcho.chia.types.wallet.LoginRsp;
 
 /**
  * Wallet action constants

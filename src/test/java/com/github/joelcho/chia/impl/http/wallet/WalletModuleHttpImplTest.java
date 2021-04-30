@@ -1,11 +1,9 @@
 package com.github.joelcho.chia.impl.http.wallet;
 
-import com.github.joelcho.chia.WalletRpcApi;
 import com.github.joelcho.chia.types.primitive.Uint64;
 import com.github.joelcho.chia.types.wallet.FarmedAmountRsp;
 import com.github.joelcho.chia.types.wallet.TransactionRecord;
 import com.github.joelcho.chia.types.wallet.WalletBalance;
-import com.github.joelcho.chia.types.wallet.login.LoginParam;
 import com.github.joelcho.chia.wallet.WalletModule;
 import junit.framework.TestCase;
 

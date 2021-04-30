@@ -18,9 +18,5 @@ public interface WalletManagementModule {
      */
     List<WalletInfo> getWallets() throws Exception;
 
-    /**
-     * Creates a new wallet for this key.
-     */
-    // TODO
-    void createNewWallet() throws Exception;
+    // TODO create_new_wallet not implemented
 }

@@ -11,9 +11,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.joelcho.chia.action.WalletAction;
 import com.github.joelcho.chia.impl.http.Caller;
 import com.github.joelcho.chia.types.wallet.AddKeyType;
+import com.github.joelcho.chia.types.wallet.LoginRsp;
 import com.github.joelcho.chia.types.wallet.PrivateKey;
-import com.github.joelcho.chia.types.wallet.login.LoginParam;
-import com.github.joelcho.chia.types.wallet.login.LoginRsp;
 import com.github.joelcho.chia.wallet.KeyManagementModule;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -37,11 +36,20 @@ public class KeyManagementModuleHttpImpl implements KeyManagementModule {
     }
 
     @Override
-    public LoginRsp login(LoginParam param) throws Exception {
+    public long login(long fingerprint) throws Exception {
+        LoginRsp rsp = login(fingerprint, "skip", "", null);
+        return rsp.getFingerprint();
+    }
+
+    @Override
+    public LoginRsp login(long fingerprint, String type, String host, String filePath) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
-        params.put("fingerprint", param.getFingerprint());
-        params.put("type", param.getType().toString());
-        params.put("host", "");
+        params.put("fingerprint", fingerprint);
+        params.put("type", type);
+        params.put("host", host == null ? "" : host);
+        if ("restore_backup".equals(type)) {
+            params.put("file_path", filePath);
+        }
         return Caller.call(httpClient, uri, objectMapper, params, WalletAction.LOG_IN);
     }
 
