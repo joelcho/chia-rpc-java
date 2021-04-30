@@ -5,6 +5,7 @@
 // IDE            : IntelliJ IDEA community edition
 package com.github.joelcho.chia.types.primitive;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
@@ -44,6 +45,10 @@ public abstract class UintValue extends Number implements Comparable<UintValue> 
 
     public BigInteger bigIntegerValue() {
         return this.raw;
+    }
+
+    public BigDecimal bigDecimalValue() {
+        return new BigDecimal(this.raw);
     }
 
     @Override
