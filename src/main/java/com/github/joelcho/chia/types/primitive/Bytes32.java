@@ -26,9 +26,8 @@ public class Bytes32 {
 
     private final byte[] bytes = new byte[32];
 
-    private Bytes32(byte[] b) {
-        assert b.length <= 32;
-        System.arraycopy(b, 0, this.bytes, 32 - b.length, b.length);
+    public Bytes32(byte[] b) {
+        System.arraycopy(b, 0, this.bytes, 0, Math.min(b.length, this.bytes.length));
     }
 
     public byte[] getBytes() {
