@@ -40,7 +40,7 @@ public class WalletModuleHttpImplTest extends TestCase {
     public void testSendTransaction() throws Exception {
         BigInteger amount = BigInteger.valueOf(123);
         BigInteger fee = BigInteger.valueOf(123);
-        final TransactionRecord record = wm.sendTransaction(0, Uint64.fromInteger(amount), Uint64.fromInteger(fee));
+        final TransactionRecord record = wm.sendTransaction(0, Uint64.fromInteger(amount), "", Uint64.fromInteger(fee));
     }
 
     public void testCreateBackup() {

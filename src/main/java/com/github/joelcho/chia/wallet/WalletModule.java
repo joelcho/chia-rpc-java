@@ -45,7 +45,7 @@ public interface WalletModule {
     /**
      * Sends a standard transaction to a target puzzle_hash.
      */
-    TransactionRecord sendTransaction(long walletId, Uint64 amount, Uint64 fee) throws Exception;
+    TransactionRecord sendTransaction(long walletId, Uint64 amount, String address, Uint64 fee) throws Exception;
 
     /**
      * Creates a backup for this wallet.

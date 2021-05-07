@@ -70,10 +70,11 @@ public class WalletModuleHttpImpl implements WalletModule {
     }
 
     @Override
-    public TransactionRecord sendTransaction(long walletId, Uint64 amount, Uint64 fee) throws Exception {
+    public TransactionRecord sendTransaction(long walletId, Uint64 amount, String address, Uint64 fee) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("wallet_id", walletId);
         params.put("amount", amount.toString());
+        params.put("address", address);
         params.put("fee", fee.toString());
         return WalletCaller.call(httpClient, uri, objectMapper, params, WalletAction.SEND_TRANSACTION);
     }
