@@ -9,7 +9,10 @@ import com.github.joelcho.chia.types.node.Coin;
 import com.github.joelcho.chia.types.node.SpendBundle;
 import com.github.joelcho.chia.types.primitive.Bytes32;
 import com.github.joelcho.chia.types.primitive.Uint64;
+import com.github.joelcho.chia.util.AddressUtil;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * @author Joel
@@ -28,8 +31,8 @@ public class TransactionRecord {
     private boolean confirmed;
     private long sent;
     private SpendBundle spendBundle;
-    private Coin additions;
-    private Coin removals;
+    private List<Coin> additions;
+    private List<Coin> removals;
     private long walletId;
 
     private Object sent_to;
@@ -39,7 +42,8 @@ public class TransactionRecord {
 
     public String getToAddress() {
         if (toAddress == null) {
-            toAddress = ""; // TODO encode_puzzle_hash(this.to_puzzle_hash, prefix)
+            String prefix = "xch"; // TODO ambiguous prefix
+            toAddress = AddressUtil.encode(toPuzzleHash, prefix);
         }
         return toAddress;
     }

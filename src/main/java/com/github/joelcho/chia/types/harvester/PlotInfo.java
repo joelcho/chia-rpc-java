@@ -22,7 +22,7 @@ public class PlotInfo {
     private Uint64 size;
     @JsonProperty("plot-seed")
     @JsonDeserialize(converter = HexToByteArrayConverter.class)
-    private byte[] plotSeed; //TODO plot-seed
+    private byte[] plotSeed;
     private G1Element poolPublicKey;
     private Bytes32 poolContractPuzzleHash;
     private G1Element plotPublicKey;

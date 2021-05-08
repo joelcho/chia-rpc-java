@@ -5,6 +5,8 @@
 // IDE            : IntelliJ IDEA community edition
 package com.github.joelcho.chia.types.node;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.github.joelcho.chia.converter.HexToByteArrayConverter;
 import lombok.Data;
 
 /**
@@ -13,4 +15,8 @@ import lombok.Data;
 @Data
 public class CoinSolution {
     private Coin coin;
+    @JsonDeserialize(converter = HexToByteArrayConverter.class)
+    private byte[] puzzleReveal;
+    @JsonDeserialize(converter = HexToByteArrayConverter.class)
+    private byte[] solution;
 }

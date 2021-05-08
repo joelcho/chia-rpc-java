@@ -6,10 +6,13 @@
 package com.github.joelcho.chia.impl.http.wallet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.joelcho.chia.action.WalletAction;
+import com.github.joelcho.chia.types.node.Coin;
 import com.github.joelcho.chia.types.primitive.Uint64;
 import com.github.joelcho.chia.types.wallet.FarmedAmountRsp;
+import com.github.joelcho.chia.types.wallet.SignedTransactionReq;
 import com.github.joelcho.chia.types.wallet.TransactionRecord;
 import com.github.joelcho.chia.types.wallet.WalletBalance;
 import com.github.joelcho.chia.wallet.WalletModule;
@@ -98,5 +101,34 @@ public class WalletModuleHttpImpl implements WalletModule {
     @Override
     public FarmedAmountRsp getFarmedAmount() throws Exception {
         return WalletCaller.call(httpClient, uri, objectMapper, emptyNode, WalletAction.GET_FARMED_AMOUNT);
+    }
+
+    @Override
+    public TransactionRecord createSignedTransaction(SignedTransactionReq req) throws Exception {
+        ObjectNode request = objectMapper.createObjectNode();
+        ArrayNode additions = objectMapper.createArrayNode();
+        for (SignedTransactionReq.Addition addition : req.getAdditions()) {
+            ObjectNode add = objectMapper.createObjectNode();
+            add.put("amount", addition.getAmount().toString());
+            add.put("puzzle_hash", addition.getPuzzleHash());
+            additions.add(add);
+        }
+        request.set("additions", additions);
+        if (req.getFee() != null) {
+            request.put("fee", req.getFee().toString());
+        }
+        final List<Coin> coinList = req.getCoins();
+        if (coinList != null && !coinList.isEmpty()) {
+            ArrayNode coins = objectMapper.createArrayNode();
+            for (Coin coin : coinList) {
+                ObjectNode o = objectMapper.createObjectNode();
+                o.put("parent_coin_info", coin.getParentCoinInfo().toHexString(true));
+                o.put("puzzle_hash", coin.getPuzzleHash().toHexString(true));
+                o.put("amount", coin.getAmount().toString());
+                coins.add(o);
+            }
+            request.set("coins", coins);
+        }
+        return WalletCaller.call(httpClient, uri, objectMapper, request, WalletAction.CREATE_SIGNED_TRANSACTION);
     }
 }

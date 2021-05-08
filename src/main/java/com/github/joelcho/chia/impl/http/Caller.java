@@ -50,14 +50,12 @@ public class Caller {
             InputStream in = entity.getContent();
             jsonNode = mapper.readValue(in, JsonNode.class);
         }
-        System.out.println(jsonNode.toPrettyString());
         JsonParser returnJsonParser = null;
 
         JsonNode statusNode = jsonNode.get("success");
         if (statusNode != null && statusNode.isBoolean()) {
             if (statusNode.booleanValue()) {
                 if (action.getReturnType().equals(Void.TYPE)) {
-                    // TODO primitive type unboxing may cause NullPointerException
                     return null;
                 }
                 String fieldName = action.getResultFieldName();

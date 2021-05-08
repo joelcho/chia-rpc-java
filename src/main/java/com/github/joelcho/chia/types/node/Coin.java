@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @Data
 public class Coin {
-    private Bytes32 parent_coin_info;
-    private Bytes32 puzzle_hash;
+    private Bytes32 parentCoinInfo;
+    private Bytes32 puzzleHash;
     private Uint64 amount;
 }

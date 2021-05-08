@@ -7,6 +7,7 @@ package com.github.joelcho.chia.wallet;
 
 import com.github.joelcho.chia.types.primitive.Uint64;
 import com.github.joelcho.chia.types.wallet.FarmedAmountRsp;
+import com.github.joelcho.chia.types.wallet.SignedTransactionReq;
 import com.github.joelcho.chia.types.wallet.TransactionRecord;
 import com.github.joelcho.chia.types.wallet.WalletBalance;
 
@@ -62,5 +63,8 @@ public interface WalletModule {
      */
     FarmedAmountRsp getFarmedAmount() throws Exception;
 
-    // TODO create signed tx
+    /**
+     * Creates signed transaction
+     */
+    TransactionRecord createSignedTransaction(SignedTransactionReq req) throws Exception;
 }
