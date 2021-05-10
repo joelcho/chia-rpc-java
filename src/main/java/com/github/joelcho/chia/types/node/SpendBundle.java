@@ -15,5 +15,5 @@ import java.util.List;
 @Data
 public class SpendBundle {
     private List<CoinSolution> coinSolutions;
-    private Object aggregatedSignature;
+    private G2Element aggregatedSignature;
 }

@@ -7,15 +7,16 @@ package com.github.joelcho.chia.impl.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.joelcho.chia.FullNode;
-import com.github.joelcho.chia.action.ActionResultMap;
 import com.github.joelcho.chia.action.FullNodeAction;
 import com.github.joelcho.chia.converter.Uint64Converter;
 import com.github.joelcho.chia.types.node.*;
 import com.github.joelcho.chia.types.primitive.Bytes32;
 import com.github.joelcho.chia.types.primitive.Uint128;
 import com.github.joelcho.chia.types.primitive.Uint64;
+import com.github.joelcho.chia.util.HexUtil;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.math.BigInteger;
@@ -144,7 +145,26 @@ public class FullNodeHttpImpl implements FullNode {
 
     @Override
     public MempoolInclusionStatus pushTx(SpendBundle spendBundle) throws Exception {
-        throw new UnsupportedOperationException("no implemented");
+        final ObjectNode bundle = objectMapper.createObjectNode();
+        bundle.put("aggregated_signature", spendBundle.getAggregatedSignature().toHexString(true));
+        final ArrayNode coinSolutions = objectMapper.createArrayNode();
+        for (CoinSolution s : spendBundle.getCoinSolutions()) {
+            final ObjectNode solution = objectMapper.createObjectNode();
+            final Coin c = s.getCoin();
+            final ObjectNode coin = objectMapper.createObjectNode();
+            coin.put("parent_coin_info", c.getParentCoinInfo().toHexString(true));
+            coin.put("puzzle_hash", c.getPuzzleHash().toHexString(true));
+            coin.put("amount", c.getAmount().toString());
+            solution.set("coin", coin);
+            solution.put("puzzle_reveal", HexUtil.toHexString(s.getPuzzleReveal(), true, false, 0));
+            solution.put("solution", HexUtil.toHexString(s.getSolution(), true, false, 0));
+            coinSolutions.add(solution);
+        }
+        bundle.set("coin_solutions", coinSolutions);
+
+        final ObjectNode param = objectMapper.createObjectNode();
+        param.set("spend_bundle", bundle);
+        return Caller.call(httpClient, uri, objectMapper, param, FullNodeAction.PUSH_TX);
     }
 
     @Override

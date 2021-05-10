@@ -57,6 +57,9 @@ public class FullNodeAction {
     public static final Action GET_COIN_RECORD_BY_NAME
             = new Action("get_coin_record_by_name", "coin_record", CoinRecord.class);
 
+    public static final Action PUSH_TX
+            = new Action("push_tx", "status", MempoolInclusionStatus.class);
+
     public static final Action GET_ALL_MEMPOOL_TX_IDS
             = new Action("get_all_mempool_tx_ids", "tx_ids", String.class, Action.SEC_TYPE_COLLECTION);
 
