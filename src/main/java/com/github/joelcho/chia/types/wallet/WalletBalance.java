@@ -20,4 +20,6 @@ public class WalletBalance {
     private Uint128 spendableBalance;
     private Uint128 pendingChange;
     private Uint64 maxSendAmount;
+    private Uint128 pendingCoinRemovalCount;
+    private Uint128 unspentCoinCount;
 }
