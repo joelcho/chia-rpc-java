@@ -59,7 +59,7 @@ public class WalletAction {
     public static final Action GET_WALLET_BALANCE
             = new Action("get_wallet_balance", "wallet_balance", WalletBalance.class);
     public static final Action GET_TRANSACTION
-            = new Action("get_transaction", null, TransactionRecord.class);
+            = new Action("get_transaction", "transaction", TransactionRecord.class);
     public static final Action GET_TRANSACTIONS
             = new Action("get_transactions", "transactions", TransactionRecord.class, Action.SEC_TYPE_COLLECTION);
     public static final Action GET_NEXT_ADDRESS
