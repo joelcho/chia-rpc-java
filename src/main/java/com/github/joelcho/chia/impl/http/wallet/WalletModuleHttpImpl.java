@@ -76,9 +76,9 @@ public class WalletModuleHttpImpl implements WalletModule {
     public TransactionRecord sendTransaction(long walletId, Uint64 amount, String address, Uint64 fee) throws Exception {
         final ObjectNode params = objectMapper.createObjectNode();
         params.put("wallet_id", walletId);
-        params.put("amount", amount.toString());
+        params.put("amount", amount.bigIntegerValue());
         params.put("address", address);
-        params.put("fee", fee.toString());
+        params.put("fee", fee.bigIntegerValue());
         return WalletCaller.call(httpClient, uri, objectMapper, params, WalletAction.SEND_TRANSACTION);
     }
 
