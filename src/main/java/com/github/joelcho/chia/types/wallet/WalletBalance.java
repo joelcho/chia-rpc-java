@@ -15,6 +15,7 @@ import lombok.Data;
 @Data
 public class WalletBalance {
     private long walletId;
+    private Uint64 fingerprint;
     private Uint128 confirmedWalletBalance;
     private Uint128 unconfirmedWalletBalance;
     private Uint128 spendableBalance;
