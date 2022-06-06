@@ -40,6 +40,11 @@ public class TransactionRecord {
     private TransactionType type;
     private Bytes32 name;
 
+    /**
+     * 此处偷懒，没有指定对象信息
+     */
+    private Object memos;
+
     public String getToAddress() {
         if (toAddress == null) {
             String prefix = "xch"; // TODO ambiguous prefix
